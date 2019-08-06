@@ -147,22 +147,14 @@ function [63:0] I_FUNC(
 		BLTZ_OR_BGEZ:
 			begin
 				case(Ins[20:16])
-					BLTZ_r:
-						begin
-							if(Rdata1 < 0) I_FUNC = {ONE32, nextPC};
-							else I_FUNC = {ZERO32, nextPC};
-						end
-					BGEZ_r:
-					begin
-						if(Rdata1 > 0) I_FUNC = {ONE32, nextPC};
-						else I_FUNC = {ZERO32, nextPC};
-					end
+					BLTZ_r: I_FUNC = (Rdata1 < 0) ? {ZERO32, nextPC + (Ed32 << 2)} : {ZERO32, nextPC};
+					BGEZ_r: I_FUNC = (Rdata1 >= 0) ? {ZERO32, nextPC + (Ed32 << 2)} : {ZERO32, nextPC};
 				endcase
 			end
-		BEQ: I_FUNC = {ZERO32, nextPC};
-		BNE: I_FUNC = {ZERO32, nextPC};
-		BLEZ: I_FUNC = {ZERO32, nextPC};
-		BGTZ: I_FUNC = {ZERO32, nextPC};
+		BEQ: I_FUNC = (Rdata1 == Rdata2) ? {ZERO32, nextPC + (Ed32 << 2)} : {ZERO32, nextPC};
+		BNE: I_FUNC = (Rdata1 != Rdata2) ? {ZERO32, nextPC + (Ed32 << 2)} : {ZERO32, nextPC};
+		BLEZ: I_FUNC = (Rdata1 <= 0) ? {ZERO32, nextPC + (Ed32 << 2)} : {ZERO32, nextPC};
+		BGTZ: I_FUNC = (Rdata1 > 0) ? {ZERO32, nextPC + (Ed32 << 2)} : {ZERO32, nextPC};
 		// ===== default =====
 		default: I_FUNC = {ZERO32, nextPC};
 	endcase
