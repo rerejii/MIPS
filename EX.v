@@ -17,7 +17,6 @@ reg [31:0] HIreg = ZERO32;
 reg [31:0] LOreg = ZERO32;
 
 assign {Result, newPC} = ALU(Ins, Rdata1, Rdata2, Ed32, nextPC, HIreg, LOreg);
-
 always @(posedge CLK)
 	begin
 		{HIreg, LOreg} <= MULT_DIV(Ins, Rdata1, Rdata2, HIreg, LOreg);
@@ -36,8 +35,8 @@ function [63:0] MULT_DIV(
 			case(Ins[5:0])
 				MULT: MULT_DIV = Rdata1 * Rdata2;
 				MULTU: MULT_DIV = Rdata1 * Rdata2;
-				DIV: MULT_DIV = Rdata1 / Rdata2;
-				DIVU: MULT_DIV = Rdata1 / Rdata2;
+				DIV: MULT_DIV = {(Rdata1 % Rdata2), (Rdata1 / Rdata2)};
+				DIVU: MULT_DIV = {(Rdata1 % Rdata2), (Rdata1 / Rdata2)};
 				default: MULT_DIV = {HIreg, LOreg};
 			endcase
 		end
