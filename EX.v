@@ -130,11 +130,8 @@ function [63:0] I_FUNC(
 		// ===== ALU(I) =====
 		ADDI: I_FUNC = {Rdata1 + Ed32, nextPC};
 		ADDIU: I_FUNC = {Rdata1 + Ed32, nextPC};
-		SLTI:
-			begin
-				if(Rdata1 < Ed32) I_FUNC = {ONE32, nextPC};
-				else I_FUNC = {ZERO32, nextPC};
-			end
+		SLTI: I_FUNC = (Rdata1 < Ed32) ? {ONE32, nextPC} : {ZERO32, nextPC};
+		SLTIU: I_FUNC = (Rdata1 < Ed32) ? {ONE32, nextPC} : {ZERO32, nextPC};
 		ANDI: I_FUNC = {Rdata1 & Ed32, nextPC};
 		ORI: I_FUNC = {Rdata1 | Ed32, nextPC};
 		XORI: I_FUNC = {Rdata1 ^ Ed32, nextPC};
