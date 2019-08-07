@@ -170,5 +170,5 @@ function [63:0] J_FUNC(
 		default: J_FUNC = {ZERO32, nextPC};
 	endcase
 endfunction // J_FUNC
-
+// ----- endmodule -------------------------------------------
 endmodule
