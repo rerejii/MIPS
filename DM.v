@@ -29,16 +29,6 @@ function [31:0] MUX(
   input [31:0] Ins
 );
 case(Ins[31:26])
-  R_FORM:
-    begin
-      case(Ins[5:0])
-        JR: MUX = ZERO32; // Rdata1の値に飛ぶ(Resultはなし)
-        JALR: MUX = nextPC; // 本来のPCをレジスタに退避
-        default: MUX = Adr; // Resultの値を返す
-      endcase // case(Ins[31:26])
-    end
-  J: MUX = ZERO32; // (Resultはなし)
-  JAL: MUX = nextPC; // 本来のPCをレジスタに退避
   LW: MUX = DMem[Adr>>2]; // ロードした値を返す
   SW: MUX = ZERO32; // ストア命令(Resultはなし)
   default: MUX = Adr; // Resultの値を返す
