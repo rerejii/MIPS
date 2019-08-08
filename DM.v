@@ -11,7 +11,14 @@ module DM(
 `include "common_param.vh"
 parameter ONE32 = 32'h1;
 parameter ZERO32 = 32'h0;
+reg i = 32'h0;
 reg [31:0] DMem [0:DMEM_SIZE-1];
+
+initial begin
+	for (i = 0; i < DMEM_SIZE; i = i + 1) begin
+		DMem[i] <= 32'b0;
+	end
+end
 
 assign Rdata = MUX;
 

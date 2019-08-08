@@ -94,13 +94,13 @@ function [63:0] R_FUNC(
 			end
 		// ==== Shifts =====
 		// $d = $t << C
-		SLL: R_FUNC = {(Rdata1 << Ed32), nextPC};
-		SRL: R_FUNC = {(Rdata1 >> Ed32), nextPC};
+		SLL: R_FUNC = {(Rdata2 << Ed32), nextPC};
+		SRL: R_FUNC = {(Rdata2 >> Ed32), nextPC};
 		// 符号付き変数 signed でなければ算術シフトがされない？
-		SRA: R_FUNC = {Rdata1 >>> Ed32, nextPC};
-		SLLV: R_FUNC = {(Rdata1 << Rdata2), nextPC};
-		SRLV: R_FUNC = {(Rdata1 >> Rdata2), nextPC};
-		SRAV: R_FUNC = {(Rdata1 >>> Rdata2), nextPC};
+		SRA: R_FUNC = {Rdata2 >>> Ed32, nextPC};
+		SLLV: R_FUNC = {(Rdata2 << Rdata1), nextPC};
+		SRLV: R_FUNC = {(Rdata2 >> Rdata1), nextPC};
+		SRAV: R_FUNC = {(Rdata2 >>> Rdata1), nextPC};
 		// ===== Jump =====
 		JR: R_FUNC = {ZERO32, Rdata1}; // Rdata1の値に飛ぶ
 		JALR: R_FUNC = {nextPC, Rdata1}; // 本来のPCをレジスタに退避
